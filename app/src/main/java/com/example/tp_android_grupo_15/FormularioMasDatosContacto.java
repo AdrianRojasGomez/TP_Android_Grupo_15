@@ -1,6 +1,8 @@
 package com.example.tp_android_grupo_15;
 
 import android.os.Bundle;
+
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class FormularioMasDatosContacto extends AppCompatActivity {
 
     private RadioGroup radioGroupEstudios;
+    private CheckBox cbDeporte, cbMusica, cbArte, cbTecnologia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,12 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
 
         //Aqui inicializamos el radioGroup!
         radioGroupEstudios = findViewById(R.id.radioGroupEstudios);
+        cbDeporte = findViewById(R.id.cbDeporte);
+        cbMusica = findViewById(R.id.cbMusica);
+        cbArte = findViewById(R.id.cbArte);
+        cbTecnologia = findViewById(R.id.cbTecnologia);
+
+
     }
 
     public void OnGuardarClick() {
