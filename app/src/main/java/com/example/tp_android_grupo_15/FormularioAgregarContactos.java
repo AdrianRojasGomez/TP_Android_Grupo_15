@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class FormularioAgregarContactos extends AppCompatActivity {
+
+    private EditText etNombre;
+    private EditText etApellido;
+    private EditText etTelefono;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +54,48 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public boolean Validaciones(){
+        boolean estado = true;
+
+        etNombre.setError(null);
+        etApellido.setError(null);
+        etTelefono.setError(null);
+
+        if(etNombre.getText().toString().isEmpty()){
+            etNombre.setError("Campo requerido");
+            estado = false;
+        }
+        else{
+
+            if(!etNombre.getText().toString().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")){
+                etNombre.setError("No se permiten numeros");
+                estado = false;
+            }
+        }
+        if(etApellido.getText().toString().isEmpty()){
+            etApellido.setError("Campo requerido");
+            estado = false;
+        }
+        else{
+
+            if(!etApellido.getText().toString().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")){
+                etApellido.setError("No se permiten numeros");
+                estado = false;
+            }
+        }
+        if(etTelefono.getText().toString().isEmpty()){
+            etTelefono.setError("Campo requerido");
+            estado = false;
+        }
+        else{
+            if(!etTelefono.getText().toString().matches("[0-9-]+")){
+                etTelefono.setError("No se permiten letras");
+                estado = false;
+            }
+
+        }
+        return estado;
+        
     }
 }
