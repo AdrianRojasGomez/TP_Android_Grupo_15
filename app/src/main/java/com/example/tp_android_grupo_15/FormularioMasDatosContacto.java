@@ -2,9 +2,12 @@ package com.example.tp_android_grupo_15;
 
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +20,8 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
 
     private RadioGroup radioGroupEstudios;
     private CheckBox cbDeporte, cbMusica, cbArte, cbTecnologia;
+    private Switch switchSiNo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,21 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
         cbTecnologia = findViewById(R.id.cbTecnologia);
 
 
+        //SWITCH POR DEFECTO EN SI
+        switchSiNo = findViewById(R.id.switchSiNo);
+        switchSiNo.setChecked(true);
+        switchSiNo.setText("Si");
+        switchSiNo.setOnCheckedChangeListener((buttonView, isChecked)->{
+            if(isChecked){
+                switchSiNo.setText("Si");
+            }else{
+                switchSiNo.setText("No");
+            }
+        });
+
+    }
+    public void eventoBoton(View view) {
+        //EVENTO BOTON GUARDAR
     }
 
     public void OnGuardarClick() {
@@ -49,4 +69,6 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
             String nivelEstudios = selected.getText().toString();
         }
     }
+
+
 }
