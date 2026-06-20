@@ -20,8 +20,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
     private EditText etTelefono;
     private EditText etEmail;
     private Spinner spinnerTelefono, spinnerEmail;
-
-
+    private android.widget.Button btnContinuar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,26 @@ public class FormularioAgregarContactos extends AppCompatActivity {
 
         spinnerTelefono.setAdapter(adapter);
         spinnerEmail.setAdapter(adapter);
+
+
+        btnContinuar = findViewById(R.id.btnContinuar);
+        btnContinuar.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                boolean esValido = Validaciones();
+
+                if (esValido) {
+                    //  Para pruebas eliminar  despues
+                    android.widget.Toast.makeText(FormularioAgregarContactos.this,
+                            "Estamos Ok!",
+                            android.widget.Toast.LENGTH_LONG).show();
+                } else {
+                   android.widget.Toast.makeText(FormularioAgregarContactos.this,
+                            "Hay errores en el formulario",
+                            android.widget.Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override
