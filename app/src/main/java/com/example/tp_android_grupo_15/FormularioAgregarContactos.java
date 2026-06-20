@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,9 @@ public class FormularioAgregarContactos extends AppCompatActivity {
     private EditText etNombre;
     private EditText etApellido;
     private EditText etTelefono;
+    private EditText etEmail;
+    private Spinner spinnerTelefono, spinnerEmail;
+
 
 
     @Override
@@ -29,6 +33,24 @@ public class FormularioAgregarContactos extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        etNombre = findViewById(R.id.etNombre);
+        etApellido = findViewById(R.id.etApellido);
+        etTelefono = findViewById(R.id.etTelefono);
+
+        etEmail = findViewById(R.id.etEmail);
+
+        spinnerTelefono = findViewById(R.id.spinnerTelefono);
+        spinnerEmail = findViewById(R.id.spinnerEmail);
+
+        // Spinners
+        String[] opcionesSpinner = {"Casa", "Trabajo", "Móvil"};
+
+        android.widget.ArrayAdapter<String> adapter = new android.widget.ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opcionesSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerTelefono.setAdapter(adapter);
+        spinnerEmail.setAdapter(adapter);
     }
 
     @Override
@@ -61,6 +83,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         etNombre.setError(null);
         etApellido.setError(null);
         etTelefono.setError(null);
+        etEmail.setError(null);
 
         if(etNombre.getText().toString().isEmpty()){
             etNombre.setError("Campo requerido");
@@ -95,6 +118,15 @@ public class FormularioAgregarContactos extends AppCompatActivity {
             }
 
         }
+        String email = etEmail.getText().toString().trim();
+        if (email.isEmpty()) {
+            etEmail.setError("Campo requerido");
+            estado = false;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Ingrese un email válido");
+            estado = false;
+        }
+
         return estado;
         
     }

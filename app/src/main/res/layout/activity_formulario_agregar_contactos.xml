@@ -10,17 +10,16 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
 
         <TextView
             android:layout_width="match_parent"
@@ -37,28 +36,28 @@
                 android:layout_marginBottom="16dp"/>
 
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="NOMBRE" android:textStyle="bold"/>
-            <EditText android:id="@+id/etNombre" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Nombre" android:inputType="textPersonName" />
+            <EditText android:id="@+id/etNombre" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Nombre" android:inputType="textPersonName" />
 
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="APELLIDO" android:textStyle="bold" android:layout_marginTop="8dp"/>
-            <EditText android:id="@+id/etApellido" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Apellido" android:inputType="textPersonName" />
+            <EditText android:id="@+id/etApellido" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Apellido" android:inputType="textPersonName" />
 
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TELÉFONO" android:textStyle="bold" android:layout_marginTop="8dp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:text="TELÉFONO" android:textStyle="bold" android:layout_marginTop="8dp"/>
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                <EditText android:id="@+id/etTelefono" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Telefono" android:inputType="phone" />
+                <EditText android:id="@+id/etTelefono" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Telefono" android:inputType="phone" />
                 <Spinner android:id="@+id/spinnerTelefono" android:layout_width="wrap_content" android:layout_height="match_parent" />
             </LinearLayout>
 
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="EMAIL" android:textStyle="bold" android:layout_marginTop="8dp"/>
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                <EditText android:id="@+id/etEmail" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Email" android:inputType="textEmailAddress" />
+                <EditText android:id="@+id/etEmail" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Email" android:inputType="textEmailAddress" />
                 <Spinner android:id="@+id/spinnerEmail" android:layout_width="wrap_content" android:layout_height="match_parent" />
             </LinearLayout>
 
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="DIRECCIÓN" android:textStyle="bold" android:layout_marginTop="8dp"/>
-            <EditText android:id="@+id/etDireccion" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Dirección" android:inputType="text" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:text="DIRECCIÓN" android:textStyle="bold" android:layout_marginTop="8dp"/>
+            <EditText android:id="@+id/etDireccion" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Dirección" android:inputType="text" />
 
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="FECHA DE NACIMIENTO" android:textStyle="bold" android:layout_marginTop="8dp"/>
-            <EditText android:id="@+id/etFechaNacimiento" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="DD/MM/AAAA" android:inputType="date" />
+            <EditText android:id="@+id/etFechaNacimiento" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="DD/MM/AAAA" android:inputType="date" />
 
             <Button
                 android:id="@+id/btnContinuar"
