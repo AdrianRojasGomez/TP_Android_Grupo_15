@@ -1,5 +1,7 @@
 package Entidades;
 
+import androidx.annotation.NonNull;
+
 public class Contacto {
     /// Datos Primer formulario: Agregar Contactos
     private int id;
@@ -160,5 +162,27 @@ public class Contacto {
 
     public void setRecibirInformacion(boolean recibirInformacion) {
         this.recibirInformacion = recibirInformacion;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Contacto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", tipoTelefono='" + tipoTelefono + '\'' +
+                ", email='" + email + '\'' +
+                ", tipoEmail='" + tipoEmail + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", nivelEstudios='" + nivelEstudios + '\'' +
+                ", interesDeporte=" + interesDeporte +
+                ", interesMusica=" + interesMusica +
+                ", interesArte=" + interesArte +
+                ", interesTecnologia=" + interesTecnologia +
+                ", recibirInformacion=" + recibirInformacion +
+                '}';
     }
 }

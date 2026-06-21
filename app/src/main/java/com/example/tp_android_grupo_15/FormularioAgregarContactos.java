@@ -26,7 +26,6 @@ public class FormularioAgregarContactos extends AppCompatActivity {
     private EditText etDireccion;
     private EditText etFechaNacimiento;
     private Spinner spinnerTelefono, spinnerEmail;
-    private android.widget.Button btnContinuar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +37,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         etNombre = findViewById(R.id.etNombre);
         etApellido = findViewById(R.id.etApellido);
@@ -58,25 +58,35 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         spinnerTelefono.setAdapter(adapter);
         spinnerEmail.setAdapter(adapter);
 
-
-        btnContinuar = findViewById(R.id.btnContinuar);
+        /// Logica de Boton Continuar
+        android.widget.Button btnContinuar = findViewById(R.id.btnContinuar);
         btnContinuar.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
-                boolean esValido = Validaciones();
 
-                if (esValido) {
-                    //  Para pruebas eliminar  despues
-                    android.widget.Toast.makeText(FormularioAgregarContactos.this,
-                            "Estamos Ok!",
-                            android.widget.Toast.LENGTH_LONG).show();
-                } else {
+                if (!Validaciones()) {
                     android.widget.Toast.makeText(FormularioAgregarContactos.this,
                             "Hay errores en el formulario",
                             android.widget.Toast.LENGTH_LONG).show();
+                    return;
                 }
+
+                Intent intent = new Intent(FormularioAgregarContactos.this, FormularioMasDatosContacto.class);
+                intent.putExtra("nombre", etNombre.getText().toString());
+                intent.putExtra("apellido", etApellido.getText().toString());
+                intent.putExtra("telefono", etTelefono.getText().toString());
+                intent.putExtra("tipoTelefono", spinnerTelefono.toString());
+                intent.putExtra("email", etEmail.getText().toString());
+                intent.putExtra("tipoEmail", spinnerEmail.toString());
+                intent.putExtra("direccion", etDireccion.getText().toString());
+                intent.putExtra("fechaNacimiento", etFechaNacimiento.getText().toString());
+                startActivity(intent);
             }
         });
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Formulario de Contacto 1/2");
+        }
     }
 
     @Override

@@ -54,12 +54,13 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
             }
         });
 
-    }
-    public void eventoBoton(View view) {
-        //EVENTO BOTON GUARDAR
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Formulario de Contacto 2/2");
+        }
+
     }
 
-    public void OnGuardarClick() {
+    public void OnGuardarClick(View view) {
         int selectedId = radioGroupEstudios.getCheckedRadioButtonId();
 
         if (selectedId == -1) {
