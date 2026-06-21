@@ -13,12 +13,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class FormularioAgregarContactos extends AppCompatActivity {
 
     private EditText etNombre;
     private EditText etApellido;
     private EditText etTelefono;
     private EditText etEmail;
+    private EditText etDireccion;
+    private EditText etFechaNacimiento;
     private Spinner spinnerTelefono, spinnerEmail;
     private android.widget.Button btnContinuar;
 
@@ -36,8 +42,9 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         etNombre = findViewById(R.id.etNombre);
         etApellido = findViewById(R.id.etApellido);
         etTelefono = findViewById(R.id.etTelefono);
-
         etEmail = findViewById(R.id.etEmail);
+        etDireccion = findViewById(R.id.etDireccion);
+        etFechaNacimiento = findViewById(R.id.etFechaNacimiento);
 
         spinnerTelefono = findViewById(R.id.spinnerTelefono);
         spinnerEmail = findViewById(R.id.spinnerEmail);
@@ -64,7 +71,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
                             "Estamos Ok!",
                             android.widget.Toast.LENGTH_LONG).show();
                 } else {
-                   android.widget.Toast.makeText(FormularioAgregarContactos.this,
+                    android.widget.Toast.makeText(FormularioAgregarContactos.this,
                             "Hay errores en el formulario",
                             android.widget.Toast.LENGTH_LONG).show();
                 }
@@ -87,8 +94,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
             Intent intent = new Intent(this, FormularioAgregarContactos.class);
             startActivity(intent);
             return true;
-        }
-        else if (id == R.id.ListadoContactos) {
+        } else if (id == R.id.ListadoContactos) {
             Intent intent = new Intent(this, FormularioListarContactos.class);
             startActivity(intent);
             return true;
@@ -96,57 +102,62 @@ public class FormularioAgregarContactos extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public boolean Validaciones(){
-        boolean estado = true;
 
-        etNombre.setError(null);
-        etApellido.setError(null);
-        etTelefono.setError(null);
-        etEmail.setError(null);
+    public boolean Validaciones() {
 
-        if(etNombre.getText().toString().isEmpty()){
-            etNombre.setError("Campo requerido");
-            estado = false;
-        }
-        else{
+        boolean esNombreValido = ValidarCampo(etNombre, "[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+", "No se permiten numeros");
+        boolean esApellidoValido = ValidarCampo(etApellido, "[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+", "No se permiten numeros");
+        boolean esTelefonoValido = ValidarCampo(etTelefono, "[0-9-]+", "No se permiten letras");
+        boolean esEmailValido = ValidarCampo(etEmail, null, null);
+        boolean esDireccionValido = ValidarCampo(etDireccion, null, null);
+        boolean esFechaValida = ValidarFecha(etFechaNacimiento);
 
-            if(!etNombre.getText().toString().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")){
-                etNombre.setError("No se permiten numeros");
-                estado = false;
+        if (esEmailValido) {
+            String email = etEmail.getText().toString().trim();
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etEmail.setError("Ingrese un email válido");
+                esEmailValido = false;
             }
         }
-        if(etApellido.getText().toString().isEmpty()){
-            etApellido.setError("Campo requerido");
-            estado = false;
-        }
-        else{
 
-            if(!etApellido.getText().toString().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")){
-                etApellido.setError("No se permiten numeros");
-                estado = false;
-            }
-        }
-        if(etTelefono.getText().toString().isEmpty()){
-            etTelefono.setError("Campo requerido");
-            estado = false;
-        }
-        else{
-            if(!etTelefono.getText().toString().matches("[0-9-]+")){
-                etTelefono.setError("No se permiten letras");
-                estado = false;
-            }
+        return esNombreValido && esApellidoValido && esTelefonoValido && esEmailValido && esDireccionValido && esFechaValida;
 
+    }
+
+    private boolean ValidarCampo(EditText campo, String regex, String errorFormato) {
+        String valor = campo.getText().toString().trim();
+        campo.setError(null);
+
+        if (valor.isEmpty()) {
+            campo.setError("Campo requerido");
+            return false;
         }
-        String email = etEmail.getText().toString().trim();
-        if (email.isEmpty()) {
-            etEmail.setError("Campo requerido");
-            estado = false;
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Ingrese un email válido");
-            estado = false;
+        if (regex != null && !valor.matches(regex)) {
+            campo.setError(errorFormato);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean ValidarFecha(EditText campo) {
+        String fecha = campo.getText().toString().trim();
+        campo.setError(null);
+
+        if (fecha.isEmpty()) {
+            campo.setError("Campo requerido");
+            return false;
         }
 
-        return estado;
-        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        sdf.setLenient(false);
+
+        try {
+            sdf.parse(fecha);
+            return true;
+        } catch (ParseException e) {
+            // Con un datepicker esto no deberia pasar nunca, pero es mejor cubrir el scenario por si cambia el front algun dia que se yo
+            campo.setError("Ingrese una fecha valida (DD/MM/YYYY)");
+            return false;
+        }
     }
 }
