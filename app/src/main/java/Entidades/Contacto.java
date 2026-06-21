@@ -6,7 +6,12 @@ public class Contacto {
     private String nombre;
     private String apellido;
     private String telefono;
+    private String tipoTelefono;
     private String email;
+    private String tipoEmail;
+    private String direccion;
+    private String fechaNacimiento;
+
 
     /// Datos Segundo formulario: Mas Datos Contacto
     private String nivelEstudios;   // valor del RadioGroup
@@ -19,14 +24,16 @@ public class Contacto {
     public Contacto() {
     }
 
-    public Contacto(int id, String nombre, String apellido, String telefono, String email, String nivelEstudios,
-                    boolean interesDeporte, boolean interesMusica, boolean interesArte, boolean interesTecnologia,
-                    boolean recibirInformacion) {
+    public Contacto(int id, String nombre, String apellido, String telefono, String tipoTelefono, String email, String tipoEmail, String direccion, String fechaNacimiento, String nivelEstudios, boolean interesDeporte, boolean interesMusica, boolean interesArte, boolean interesTecnologia, boolean recibirInformacion) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
+        this.tipoTelefono = tipoTelefono;
         this.email = email;
+        this.tipoEmail = tipoEmail;
+        this.direccion = direccion;
+        this.fechaNacimiento = fechaNacimiento;
         this.nivelEstudios = nivelEstudios;
         this.interesDeporte = interesDeporte;
         this.interesMusica = interesMusica;
@@ -67,12 +74,44 @@ public class Contacto {
         this.telefono = telefono;
     }
 
+    public String getTipoTelefono() {
+        return tipoTelefono;
+    }
+
+    public void setTipoTelefono(String tipoTelefono) {
+        this.tipoTelefono = tipoTelefono;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTipoEmail() {
+        return tipoEmail;
+    }
+
+    public void setTipoEmail(String tipoEmail) {
+        this.tipoEmail = tipoEmail;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getNivelEstudios() {
