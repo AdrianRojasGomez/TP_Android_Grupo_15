@@ -60,15 +60,37 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
 
     }
 
-    public void OnGuardarClick(View view) {
-        int selectedId = radioGroupEstudios.getCheckedRadioButtonId();
+    
+    public boolean validaciones(){
+        boolean estado = true;
 
+        int selectedId = radioGroupEstudios.getCheckedRadioButtonId();
         if (selectedId == -1) {
             Toast.makeText(this, "Por favor seleccione un nivel de estudios", Toast.LENGTH_LONG).show();
-        } else {
-            RadioButton selected = findViewById(selectedId);
-            String nivelEstudios = selected.getText().toString();
+            estado = false;
         }
+
+        if (!cbDeporte.isChecked() && !cbArte.isChecked() && !cbMusica.isChecked() && !cbTecnologia.isChecked()) {
+
+            Toast.makeText(this, "Seleccione al menos un interes" , Toast.LENGTH_LONG).show();
+            estado = false;
+        }
+
+        return estado;
+
+    }
+
+
+    public void OnGuardarClick(View view) {
+
+        if(!validaciones()){
+            return;
+        }
+        int selectedId = radioGroupEstudios.getCheckedRadioButtonId();
+        RadioButton selected = findViewById(selectedId);
+
+        String nivelEstudio = selected.getText().toString();
+
     }
 
 
