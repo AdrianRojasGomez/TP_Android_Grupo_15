@@ -72,7 +72,7 @@ public class OpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<Contacto> getListadoMascotas() {
+    public ArrayList<Contacto> getListadoContactos() {
 
         ArrayList<Contacto> listaContactos = new ArrayList<Contacto>();
         return listaContactos;

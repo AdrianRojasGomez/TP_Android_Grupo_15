@@ -75,9 +75,9 @@ public class FormularioAgregarContactos extends AppCompatActivity {
                 intent.putExtra("nombre", etNombre.getText().toString());
                 intent.putExtra("apellido", etApellido.getText().toString());
                 intent.putExtra("telefono", etTelefono.getText().toString());
-                intent.putExtra("tipoTelefono", spinnerTelefono.toString());
+                intent.putExtra("tipoTelefono", spinnerTelefono.getSelectedItem().toString());
                 intent.putExtra("email", etEmail.getText().toString());
-                intent.putExtra("tipoEmail", spinnerEmail.toString());
+                intent.putExtra("tipoEmail", spinnerEmail.getSelectedItem().toString());
                 intent.putExtra("direccion", etDireccion.getText().toString());
                 intent.putExtra("fechaNacimiento", etFechaNacimiento.getText().toString());
                 startActivity(intent);

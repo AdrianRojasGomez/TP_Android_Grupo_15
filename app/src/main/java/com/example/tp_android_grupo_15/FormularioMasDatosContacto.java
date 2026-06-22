@@ -22,6 +22,16 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
     private CheckBox cbDeporte, cbMusica, cbArte, cbTecnologia;
     private Switch switchSiNo;
 
+    //FORMULARIO AGREGARCONTACTOS
+    private String nombre;
+    private String apellido;
+    private String telefono;
+    private String tipoTelefono;
+    private String email;
+    private String tipoEmail;
+    private String direccion;
+    private String fechaNacimiento;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +67,22 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Formulario de Contacto 2/2");
         }
+        //RECUPERAR DATOS DEL PRIMER FORMULARIO
+
+        nombre = getIntent().getStringExtra("nombre");
+        apellido = getIntent().getStringExtra("apellido");
+        telefono = getIntent().getStringExtra("telefono");
+        tipoTelefono = getIntent().getStringExtra("tipoTelefono");
+        email = getIntent().getStringExtra("email");
+        tipoEmail = getIntent().getStringExtra("tipoEmail");
+        direccion = getIntent().getStringExtra("direccion");
+        fechaNacimiento = getIntent().getStringExtra("fechaNacimiento");
+
+
 
     }
 
-    
+
     public boolean validaciones(){
         boolean estado = true;
 
@@ -90,6 +112,16 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
         RadioButton selected = findViewById(selectedId);
 
         String nivelEstudio = selected.getText().toString();
+
+
+        //CBOX
+        boolean interesDeporte = cbDeporte.isChecked();
+        boolean interesMusica = cbMusica.isChecked();
+        boolean interesArte = cbArte.isChecked();
+        boolean interesTecnologia = cbTecnologia.isChecked();
+
+        //SWITCH
+        boolean recibirInformacion = switchSiNo.isChecked();
 
     }
 
