@@ -62,9 +62,30 @@ public class OpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void InsertarContacto(Contacto contacto)
-    {
+    public long InsertarContacto(Contacto contacto) {
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        android.content.ContentValues values = new android.content.ContentValues();
+
+        values.put(ContactosNombre, contacto.getNombre());
+        values.put(ContactosApellido, contacto.getApellido());
+        values.put(ContactosTelefono, contacto.getTelefono());
+        values.put(ContactosTipoTelefono, contacto.getTipoTelefono());
+        values.put(ContactosEmail, contacto.getEmail());
+        values.put(ContactosTipoEmail, contacto.getTipoEmail());
+        values.put(ContactosDireccion, contacto.getDireccion());
+        values.put(ContactosFechaNacimiento, contacto.getFechaNacimiento());
+        values.put(ContactosNivelEstudios, contacto.getNivelEstudios());
+        values.put(ContactosInteresDeporte, contacto.getInteresDeporte());
+        values.put(ContactosInteresMusica, contacto.getInteresMusica());
+        values.put(ContactosInteresArte, contacto.getInteresArte());
+        values.put(ContactosInteresTecnologia, contacto.getInteresTecnologia());
+        values.put(ContactosRecibirInformacion, contacto.getRecibirInformacion());
+
+        long resultado = db.insert(ContactosTable, null, values);
+        db.close();
+
+        return resultado;
     }
 
     public void EliminarContacto(Contacto contacto)
@@ -74,8 +95,34 @@ public class OpenHelper extends SQLiteOpenHelper {
 
     public ArrayList<Contacto> getListadoContactos() {
 
-        ArrayList<Contacto> listaContactos = new ArrayList<Contacto>();
-        return listaContactos;
+        ArrayList<Contacto> listaContactos = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        android.database.Cursor cursor = db.rawQuery("SELECT * FROM " + ContactosTable, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                Contacto c = new Contacto();
+                c.setId(cursor.getInt(0));
+                c.setNombre(cursor.getString(1));
+                c.setApellido(cursor.getString(2));
+                c.setTelefono(cursor.getString(3));
+                c.setTipoTelefono(cursor.getString(4));
+                c.setEmail(cursor.getString(5));
+                c.setTipoEmail(cursor.getString(6));
+                c.setDireccion(cursor.getString(7));
+                c.setFechaNacimiento(cursor.getString(8));
+                c.setNivelEstudios(cursor.getString(9));
+                c.setInteresDeporte(cursor.getInt(10));
+                c.setInteresMusica(cursor.getInt(11));
+                c.setInteresArte(cursor.getInt(12));
+                c.setInteresTecnologia(cursor.getInt(13));
+                c.setRecibirInformacion(cursor.getInt(14));
+
+                listaContactos.add(c);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return listaContactos;
     }
 }

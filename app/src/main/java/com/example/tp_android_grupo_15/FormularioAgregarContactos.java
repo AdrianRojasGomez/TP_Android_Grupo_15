@@ -58,6 +58,34 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         spinnerTelefono.setAdapter(adapter);
         spinnerEmail.setAdapter(adapter);
 
+        ///campo fecha
+        etFechaNacimiento.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                java.util.Calendar calendario = java.util.Calendar.getInstance();
+                int anio = calendario.get(java.util.Calendar.YEAR);
+                int mes = calendario.get(java.util.Calendar.MONTH);
+                int dia = calendario.get(java.util.Calendar.DAY_OF_MONTH);
+
+                // DatePickerDialog
+                android.app.DatePickerDialog datePicker = new android.app.DatePickerDialog(
+                        FormularioAgregarContactos.this,
+                        new android.app.DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                                int mesReal = monthOfYear + 1;
+
+                                String diaFormateado = (dayOfMonth < 10) ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
+                                String mesFormateado = (mesReal < 10) ? "0" + mesReal : String.valueOf(mesReal);
+
+                                etFechaNacimiento.setText(diaFormateado + "/" + mesFormateado + "/" + year);
+                            }
+                        }, anio, mes, dia);
+
+                datePicker.show();
+            }
+        });
         /// Logica de Boton Continuar
         android.widget.Button btnContinuar = findViewById(R.id.btnContinuar);
         btnContinuar.setOnClickListener(new android.view.View.OnClickListener() {
@@ -72,14 +100,14 @@ public class FormularioAgregarContactos extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent(FormularioAgregarContactos.this, FormularioMasDatosContacto.class);
-                intent.putExtra("nombre", etNombre.getText().toString());
-                intent.putExtra("apellido", etApellido.getText().toString());
-                intent.putExtra("telefono", etTelefono.getText().toString());
-                intent.putExtra("tipoTelefono", spinnerTelefono.getSelectedItem().toString());
-                intent.putExtra("email", etEmail.getText().toString());
-                intent.putExtra("tipoEmail", spinnerEmail.getSelectedItem().toString());
-                intent.putExtra("direccion", etDireccion.getText().toString());
-                intent.putExtra("fechaNacimiento", etFechaNacimiento.getText().toString());
+                intent.putExtra("NOMBRE", etNombre.getText().toString());
+                intent.putExtra("APELLIDO", etApellido.getText().toString());
+                intent.putExtra("TELEFONO", etTelefono.getText().toString());
+                intent.putExtra("TIPOTELEFONO", spinnerTelefono.getSelectedItem().toString());
+                intent.putExtra("EMAIL", etEmail.getText().toString());
+                intent.putExtra("TIPOEMAIL", spinnerEmail.getSelectedItem().toString());
+                intent.putExtra("DIRECCION", etDireccion.getText().toString());
+                intent.putExtra("FECHANACIMIENTO", etFechaNacimiento.getText().toString());
                 startActivity(intent);
             }
         });
@@ -165,7 +193,6 @@ public class FormularioAgregarContactos extends AppCompatActivity {
             sdf.parse(fecha);
             return true;
         } catch (ParseException e) {
-            // Con un datepicker esto no deberia pasar nunca, pero es mejor cubrir el scenario por si cambia el front algun dia que se yo
             campo.setError("Ingrese una fecha valida (DD/MM/YYYY)");
             return false;
         }
