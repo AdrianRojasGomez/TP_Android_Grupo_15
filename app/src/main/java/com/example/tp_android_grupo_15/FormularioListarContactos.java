@@ -67,12 +67,45 @@ public class FormularioListarContactos extends AppCompatActivity {
                         "Email: " + contactoSeleccionado.getEmail() + "-" +contactoSeleccionado.getTipoEmail() + "\n" +
                         "Direccion: "  + contactoSeleccionado.getDireccion() + "\n" +
                         "Fecha de Nacimiento: " + contactoSeleccionado.getFechaNacimiento() + "\n" +
-                        "Nivel de estudios: " + contactoSeleccionado.getNivelEstudios();
+                        "Nivel de estudios: " + contactoSeleccionado.getNivelEstudios() + "\n\n" +
+                        "INTERESES:\n" +
+                        "Ámbito de Deportes: " + (contactoSeleccionado.getInteresDeporte() == 1 ? "Sí" : "No") + "\n" +
+                        "Música: " + (contactoSeleccionado.getInteresMusica() == 1 ? "Sí" : "No") + "\n" +
+                        "Arte: " + (contactoSeleccionado.getInteresArte() == 1 ? "Sí" : "No") + "\n" +
+                        "Ámbito de la Tecnología: " + (contactoSeleccionado.getInteresTecnologia() == 1 ? "Sí" : "No") + "\n\n" +
+                        "Quiere recibir Infomación: " + (contactoSeleccionado.getRecibirInformacion() == 1 ? "Sí" : "No");
+
+
 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(FormularioListarContactos.this);
                 builder.setTitle("Información del Contacto");
                 builder.setMessage(detalleCompleto);
+
+
+                // Boton de eliminar
+                builder.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        boolean borradoEjecutado = dbHelper.EliminarContacto(contactoSeleccionado);
+
+                        if(borradoEjecutado) {
+
+                            listaContactosOriginal.remove(position);
+                            listaParaMostrar.remove(position);
+
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(FormularioListarContactos.this, "Contacto eliminado", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(FormularioListarContactos.this, "Ha ocurrido un problema al eliminar", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+                    }
+                });
 
                 builder.setNeutralButton("Cerrar", null);
 

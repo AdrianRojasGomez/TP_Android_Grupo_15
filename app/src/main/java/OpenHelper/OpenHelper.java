@@ -3,6 +3,8 @@ package OpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
@@ -88,8 +90,15 @@ public class OpenHelper extends SQLiteOpenHelper {
         return resultado;
     }
 
-    public void EliminarContacto(Contacto contacto)
+    public boolean EliminarContacto(Contacto contacto)
     {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int cantidad = db.delete(ContactosTable, ContactosColumnaID + " = ?", new String[]{String.valueOf(contacto.getId())});
+
+        db.close();
+
+        return cantidad > 0;
 
     }
 
