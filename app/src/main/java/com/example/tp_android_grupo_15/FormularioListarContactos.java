@@ -79,7 +79,7 @@ public class FormularioListarContactos extends AppCompatActivity {
 
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(FormularioListarContactos.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(FormularioListarContactos.this,R.style.DialogoEstilo);
                 builder.setTitle("Información del Contacto");
                 builder.setMessage(detalleCompleto);
 
