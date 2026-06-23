@@ -4,29 +4,50 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import Entidades.Contacto;
+import OpenHelper.OpenHelper;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class FormularioListarContactos extends AppCompatActivity {
 
+    private ListView lvContactos;
+    private ArrayList<Contacto> listaContactosOriginal;
+    private ArrayList<String> listaParaMostrar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        super.onCreate(savedInstanceState);androidx.activity.EdgeToEdge.enable(this);
         setContentView(R.layout.activity_formulario_listar_contactos);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            androidx.core.graphics.Insets systemBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Listado de Contactos");
         }
+        lvContactos = findViewById(R.id.lvContactos);
+
+        OpenHelper dbHelper = new OpenHelper(this, "ContactosDB", null, 1);
+        listaContactosOriginal = dbHelper.getListadoContactos();
+        listaParaMostrar = new ArrayList<>();
+
+        for (Contacto c : listaContactosOriginal) {
+           String formato = c.getNombre().toUpperCase() + " " + c.getApellido().toUpperCase() + " - " + c.getEmail().toUpperCase();
+            listaParaMostrar.add(formato);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                listaParaMostrar
+        );
+        lvContactos.setAdapter(adapter);
     }
 
     @Override
