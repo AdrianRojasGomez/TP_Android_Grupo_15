@@ -83,7 +83,7 @@ public class FormularioListarContactos extends AppCompatActivity {
                 builder.setMessage(detalleCompleto);
 
 
-                // Boton de eliminar
+                // Boton de eliminar Version nueva
                 builder.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
