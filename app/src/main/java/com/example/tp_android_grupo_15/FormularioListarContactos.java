@@ -1,5 +1,6 @@
 package com.example.tp_android_grupo_15;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,9 +8,14 @@ import android.view.MenuItem;
 import Entidades.Contacto;
 import OpenHelper.OpenHelper;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -48,6 +54,32 @@ public class FormularioListarContactos extends AppCompatActivity {
                 listaParaMostrar
         );
         lvContactos.setAdapter(adapter);
+
+        lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Contacto contactoSeleccionado = listaContactosOriginal.get(position);
+
+                String detalleCompleto = "Nombre: " + contactoSeleccionado.getNombre() + "\n" +
+                        "Apellido: " + contactoSeleccionado.getApellido() + "\n" +
+                        "Telefono" + contactoSeleccionado.getTelefono() + "-" + contactoSeleccionado.getTipoTelefono() + "\n" +
+                        "Email: " + contactoSeleccionado.getEmail() + "-" +contactoSeleccionado.getTipoEmail() + "\n" +
+                        "Direccion: "  + contactoSeleccionado.getDireccion() + "\n" +
+                        "Fecha de Nacimiento: " + contactoSeleccionado.getFechaNacimiento() + "\n" +
+                        "Nivel de estudios: " + contactoSeleccionado.getNivelEstudios();
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(FormularioListarContactos.this);
+                builder.setTitle("Información del Contacto");
+                builder.setMessage(detalleCompleto);
+
+                builder.setNeutralButton("Cerrar", null);
+
+                builder.show();
+            }
+        });
+
     }
 
     @Override
@@ -75,3 +107,4 @@ public class FormularioListarContactos extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
