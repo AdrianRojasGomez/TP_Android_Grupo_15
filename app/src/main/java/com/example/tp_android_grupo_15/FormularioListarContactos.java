@@ -55,6 +55,7 @@ public class FormularioListarContactos extends AppCompatActivity {
         );
         lvContactos.setAdapter(adapter);
 
+
         lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,8 +83,29 @@ public class FormularioListarContactos extends AppCompatActivity {
                 builder.setTitle("Información del Contacto");
                 builder.setMessage(detalleCompleto);
 
+                builder.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(FormularioListarContactos.this, FormularioEditarContacto.class);
+                        intent.putExtra("ID", contactoSeleccionado.getId());
+                        intent.putExtra("NOMBRE", contactoSeleccionado.getNombre());
+                        intent.putExtra("APELLIDO", contactoSeleccionado.getApellido());
+                        intent.putExtra("TELEFONO", contactoSeleccionado.getTelefono());
+                        intent.putExtra("TIPOTELEFONO", contactoSeleccionado.getTipoTelefono());
+                        intent.putExtra("EMAIL", contactoSeleccionado.getEmail());
+                        intent.putExtra("TIPOEMAIL", contactoSeleccionado.getTipoEmail());
+                        intent.putExtra("DIRECCION", contactoSeleccionado.getDireccion());
+                        intent.putExtra("FECHANACIMIENTO", contactoSeleccionado.getFechaNacimiento());
+                        intent.putExtra("NIVELESTUDIOS", contactoSeleccionado.getNivelEstudios());
+                        intent.putExtra("DEPORTE", contactoSeleccionado.getInteresDeporte());
+                        intent.putExtra("MUSICA", contactoSeleccionado.getInteresMusica());
+                        intent.putExtra("ARTE", contactoSeleccionado.getInteresArte());
+                        intent.putExtra("TECNOLOGIA", contactoSeleccionado.getInteresTecnologia());
+                        intent.putExtra("RECIBIRINFORMACION", contactoSeleccionado.getRecibirInformacion());
+                        startActivity(intent);
+                    }
+                });
 
-                // Boton de eliminar Version nueva
                 builder.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
