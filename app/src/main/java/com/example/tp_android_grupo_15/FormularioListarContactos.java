@@ -1,5 +1,6 @@
 package com.example.tp_android_grupo_15;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,9 +8,14 @@ import android.view.MenuItem;
 import Entidades.Contacto;
 import OpenHelper.OpenHelper;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -48,6 +54,87 @@ public class FormularioListarContactos extends AppCompatActivity {
                 listaParaMostrar
         );
         lvContactos.setAdapter(adapter);
+
+
+        lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Contacto contactoSeleccionado = listaContactosOriginal.get(position);
+
+                String detalleCompleto = "Nombre: " + contactoSeleccionado.getNombre() + "\n" +
+                        "Apellido: " + contactoSeleccionado.getApellido() + "\n" +
+                        "Telefono" + contactoSeleccionado.getTelefono() + "-" + contactoSeleccionado.getTipoTelefono() + "\n" +
+                        "Email: " + contactoSeleccionado.getEmail() + "-" +contactoSeleccionado.getTipoEmail() + "\n" +
+                        "Direccion: "  + contactoSeleccionado.getDireccion() + "\n" +
+                        "Fecha de Nacimiento: " + contactoSeleccionado.getFechaNacimiento() + "\n" +
+                        "Nivel de estudios: " + contactoSeleccionado.getNivelEstudios() + "\n\n" +
+                        "INTERESES:\n" +
+                        "Ámbito de Deportes: " + (contactoSeleccionado.getInteresDeporte() == 1 ? "Sí" : "No") + "\n" +
+                        "Música: " + (contactoSeleccionado.getInteresMusica() == 1 ? "Sí" : "No") + "\n" +
+                        "Arte: " + (contactoSeleccionado.getInteresArte() == 1 ? "Sí" : "No") + "\n" +
+                        "Ámbito de la Tecnología: " + (contactoSeleccionado.getInteresTecnologia() == 1 ? "Sí" : "No") + "\n\n" +
+                        "Quiere recibir Infomación: " + (contactoSeleccionado.getRecibirInformacion() == 1 ? "Sí" : "No");
+
+
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(FormularioListarContactos.this,R.style.DialogoEstilo);
+                builder.setTitle("Información del Contacto");
+                builder.setMessage(detalleCompleto);
+
+                builder.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(FormularioListarContactos.this, FormularioEditarContacto.class);
+                        intent.putExtra("ID", contactoSeleccionado.getId());
+                        intent.putExtra("NOMBRE", contactoSeleccionado.getNombre());
+                        intent.putExtra("APELLIDO", contactoSeleccionado.getApellido());
+                        intent.putExtra("TELEFONO", contactoSeleccionado.getTelefono());
+                        intent.putExtra("TIPOTELEFONO", contactoSeleccionado.getTipoTelefono());
+                        intent.putExtra("EMAIL", contactoSeleccionado.getEmail());
+                        intent.putExtra("TIPOEMAIL", contactoSeleccionado.getTipoEmail());
+                        intent.putExtra("DIRECCION", contactoSeleccionado.getDireccion());
+                        intent.putExtra("FECHANACIMIENTO", contactoSeleccionado.getFechaNacimiento());
+                        intent.putExtra("NIVELESTUDIOS", contactoSeleccionado.getNivelEstudios());
+                        intent.putExtra("DEPORTE", contactoSeleccionado.getInteresDeporte());
+                        intent.putExtra("MUSICA", contactoSeleccionado.getInteresMusica());
+                        intent.putExtra("ARTE", contactoSeleccionado.getInteresArte());
+                        intent.putExtra("TECNOLOGIA", contactoSeleccionado.getInteresTecnologia());
+                        intent.putExtra("RECIBIRINFORMACION", contactoSeleccionado.getRecibirInformacion());
+                        startActivity(intent);
+                    }
+                });
+
+                builder.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        boolean borradoEjecutado = dbHelper.EliminarContacto(contactoSeleccionado);
+
+                        if(borradoEjecutado) {
+
+                            listaContactosOriginal.remove(position);
+                            listaParaMostrar.remove(position);
+
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(FormularioListarContactos.this, "Contacto eliminado", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(FormularioListarContactos.this, "Ha ocurrido un problema al eliminar", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+                    }
+                });
+
+                builder.setNeutralButton("Cerrar", null);
+
+                builder.show();
+            }
+        });
+
     }
 
     @Override
@@ -75,3 +162,4 @@ public class FormularioListarContactos extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+

@@ -1,8 +1,11 @@
 package OpenHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
@@ -88,8 +91,15 @@ public class OpenHelper extends SQLiteOpenHelper {
         return resultado;
     }
 
-    public void EliminarContacto(Contacto contacto)
+    public boolean EliminarContacto(Contacto contacto)
     {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int cantidad = db.delete(ContactosTable, ContactosColumnaID + " = ?", new String[]{String.valueOf(contacto.getId())});
+
+        db.close();
+
+        return cantidad > 0;
 
     }
 
@@ -124,5 +134,29 @@ public class OpenHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return listaContactos;
+    }
+    public boolean ActualizarContacto(Contacto contacto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put(ContactosNombre, contacto.getNombre());
+        v.put(ContactosApellido, contacto.getApellido());
+        v.put(ContactosTelefono, contacto.getTelefono());
+        v.put(ContactosTipoTelefono, contacto.getTipoTelefono());
+        v.put(ContactosEmail, contacto.getEmail());
+        v.put(ContactosTipoEmail, contacto.getTipoEmail());
+        v.put(ContactosDireccion, contacto.getDireccion());
+        v.put(ContactosFechaNacimiento, contacto.getFechaNacimiento());
+        v.put(ContactosNivelEstudios, contacto.getNivelEstudios());
+        v.put(ContactosInteresDeporte, contacto.getInteresDeporte());
+        v.put(ContactosInteresMusica, contacto.getInteresMusica());
+        v.put(ContactosInteresArte, contacto.getInteresArte());
+        v.put(ContactosInteresTecnologia, contacto.getInteresTecnologia());
+        v.put(ContactosRecibirInformacion, contacto.getRecibirInformacion());
+
+        int filas = db.update(ContactosTable, v, ContactosColumnaID + " = ?",
+                new String[]{String.valueOf(contacto.getId())});
+        db.close();
+        return filas > 0;
     }
 }

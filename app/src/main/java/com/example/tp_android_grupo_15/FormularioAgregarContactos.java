@@ -49,7 +49,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         spinnerTelefono = findViewById(R.id.spinnerTelefono);
         spinnerEmail = findViewById(R.id.spinnerEmail);
 
-        // Spinners
+
         String[] opcionesSpinner = {"Casa", "Trabajo", "Móvil"};
 
         android.widget.ArrayAdapter<String> adapter = new android.widget.ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opcionesSpinner);
@@ -58,7 +58,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         spinnerTelefono.setAdapter(adapter);
         spinnerEmail.setAdapter(adapter);
 
-        ///campo fecha
+
         etFechaNacimiento.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
@@ -67,9 +67,10 @@ public class FormularioAgregarContactos extends AppCompatActivity {
                 int mes = calendario.get(java.util.Calendar.MONTH);
                 int dia = calendario.get(java.util.Calendar.DAY_OF_MONTH);
 
-                // DatePickerDialog
+
                 android.app.DatePickerDialog datePicker = new android.app.DatePickerDialog(
                         FormularioAgregarContactos.this,
+                        R.style.DialogoEstilo,
                         new android.app.DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -86,7 +87,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
                 datePicker.show();
             }
         });
-        /// Logica de Boton Continuar
+
         android.widget.Button btnContinuar = findViewById(R.id.btnContinuar);
         btnContinuar.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
@@ -125,7 +126,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+
         int id = item.getItemId();
 
         if (id == R.id.AgregarContactos) {
