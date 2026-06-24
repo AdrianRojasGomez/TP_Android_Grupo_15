@@ -2,9 +2,12 @@ package com.example.tp_android_grupo_15;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +30,8 @@ public class FormularioAgregarContactos extends AppCompatActivity {
     private EditText etFechaNacimiento;
     private Spinner spinnerTelefono, spinnerEmail;
 
+    private ProgressBar barraProgreso;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,7 @@ public class FormularioAgregarContactos extends AppCompatActivity {
         });
 
 
+        barraProgreso = findViewById(R.id.barraProgreso);
         etNombre = findViewById(R.id.etNombre);
         etApellido = findViewById(R.id.etApellido);
         etTelefono = findViewById(R.id.etTelefono);
@@ -48,6 +54,27 @@ public class FormularioAgregarContactos extends AppCompatActivity {
 
         spinnerTelefono = findViewById(R.id.spinnerTelefono);
         spinnerEmail = findViewById(R.id.spinnerEmail);
+
+        barraProgreso.setProgress(0);
+        TextWatcher vigilanteDeTexto = new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                actualizarBarraDeProgreso();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        };
+
+        etNombre.addTextChangedListener(vigilanteDeTexto);
+        etApellido.addTextChangedListener(vigilanteDeTexto);
+        etTelefono.addTextChangedListener(vigilanteDeTexto);
+        etEmail.addTextChangedListener(vigilanteDeTexto);
+        etDireccion.addTextChangedListener(vigilanteDeTexto);
+        etFechaNacimiento.addTextChangedListener(vigilanteDeTexto);
 
 
         String[] opcionesSpinner = {"Casa", "Trabajo", "Móvil"};
@@ -198,4 +225,21 @@ public class FormularioAgregarContactos extends AppCompatActivity {
             return false;
         }
     }
-}
+
+        private void actualizarBarraDeProgreso() {
+            int camposLlenos = 0;
+            int totalCampos = 6;
+
+            if (!etNombre.getText().toString().trim().isEmpty()) camposLlenos++;
+            if (!etApellido.getText().toString().trim().isEmpty()) camposLlenos++;
+            if (!etTelefono.getText().toString().trim().isEmpty()) camposLlenos++;
+            if (!etEmail.getText().toString().trim().isEmpty()) camposLlenos++;
+            if (!etDireccion.getText().toString().trim().isEmpty()) camposLlenos++;
+            if (!etFechaNacimiento.getText().toString().trim().isEmpty()) camposLlenos++;
+
+            int porcentaje = (int) (((float) camposLlenos / totalCampos) * 50);
+
+            barraProgreso.setProgress(porcentaje);
+        }
+    }
+
