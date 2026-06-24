@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import OpenHelper.OpenHelper;
 
 public class FormularioEditarContacto extends AppCompatActivity {
@@ -20,7 +25,7 @@ public class FormularioEditarContacto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_editar_contacto);
 
-        if (getSupportActionBar() != null)
+         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle("Editar Contacto");
 
 
@@ -98,6 +103,10 @@ public class FormularioEditarContacto extends AppCompatActivity {
     }
 
     public void onGuardarClick(View view) {
+        if (!Validaciones()) {
+            Toast.makeText(this, "Hay errores en el formulario", Toast.LENGTH_LONG).show();
+            return;
+        }
         int selectedId = radioGroupEstudios.getCheckedRadioButtonId();
         if (selectedId == -1) {
             Toast.makeText(this, "Seleccione nivel de estudios", Toast.LENGTH_SHORT).show();
@@ -137,6 +146,62 @@ public class FormularioEditarContacto extends AppCompatActivity {
             finish();
         } else {
             Toast.makeText(this, "Error al actualizar", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public boolean Validaciones() {
+
+        boolean esNombreValido = ValidarCampo(etNombre, "[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+", "No se permiten numeros");
+        boolean esApellidoValido = ValidarCampo(etApellido, "[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+", "No se permiten numeros");
+        boolean esTelefonoValido = ValidarCampo(etTelefono, "[0-9-]+", "No se permiten letras");
+        boolean esEmailValido = ValidarCampo(etEmail, null, null);
+        boolean esDireccionValido = ValidarCampo(etDireccion, null, null);
+        boolean esFechaValida = ValidarFecha(etFechaNacimiento);
+
+        if (esEmailValido) {
+            String email = etEmail.getText().toString().trim();
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etEmail.setError("Ingrese un email válido");
+                esEmailValido = false;
+            }
+        }
+
+        return esNombreValido && esApellidoValido && esTelefonoValido && esEmailValido && esDireccionValido && esFechaValida;
+
+    }
+
+    private boolean ValidarCampo(EditText campo, String regex, String errorFormato) {
+        String valor = campo.getText().toString().trim();
+        campo.setError(null);
+
+        if (valor.isEmpty()) {
+            campo.setError("Campo requerido");
+            return false;
+        }
+        if (regex != null && !valor.matches(regex)) {
+            campo.setError(errorFormato);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean ValidarFecha(EditText campo) {
+        String fecha = campo.getText().toString().trim();
+        campo.setError(null);
+
+        if (fecha.isEmpty()) {
+            campo.setError("Campo requerido");
+            return false;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        sdf.setLenient(false);
+
+        try {
+            sdf.parse(fecha);
+            return true;
+        } catch (ParseException e) {
+            campo.setError("Ingrese una fecha valida (DD/MM/YYYY)");
+            return false;
         }
     }
 }
