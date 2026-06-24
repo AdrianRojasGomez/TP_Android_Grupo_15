@@ -110,21 +110,29 @@ public class FormularioListarContactos extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        boolean borradoEjecutado = dbHelper.EliminarContacto(contactoSeleccionado);
+                        AlertDialog.Builder confirmacion= new AlertDialog.Builder(FormularioListarContactos.this,
+                                R.style.DialogoEstilo);
+                        confirmacion.setTitle("Confirmar eliminación");
+                        confirmacion.setMessage("Está seguro que desea eliminar este contacto?");
 
-                        if(borradoEjecutado) {
+                        confirmacion.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog2, int which){
+                                boolean borradoEjecutado = dbHelper.EliminarContacto(contactoSeleccionado);
 
-                            listaContactosOriginal.remove(position);
-                            listaParaMostrar.remove(position);
+                                if(borradoEjecutado) {
 
-                            adapter.notifyDataSetChanged();
-                            Toast.makeText(FormularioListarContactos.this, "Contacto eliminado", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(FormularioListarContactos.this, "Ha ocurrido un problema al eliminar", Toast.LENGTH_SHORT).show();
-                        }
+                                    listaContactosOriginal.remove(position);
+                                    listaParaMostrar.remove(position);
 
-
-
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(FormularioListarContactos.this, "Contacto eliminado", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(FormularioListarContactos.this, "Ha ocurrido un problema al eliminar", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        confirmacion.setNegativeButton("No", null);
+                        confirmacion.show();
 
                     }
                 });
