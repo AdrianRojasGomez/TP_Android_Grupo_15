@@ -3,6 +3,7 @@ package com.example.tp_android_grupo_15;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -30,6 +31,7 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
     private String tipoEmail;
     private String direccion;
     private String fechaNacimiento;
+    private ProgressBar barraProgreso;
 
 
     @Override
@@ -49,6 +51,23 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
         cbMusica = findViewById(R.id.cbMusica);
         cbArte = findViewById(R.id.cbArte);
         cbTecnologia = findViewById(R.id.cbTecnologia);
+        barraProgreso = findViewById(R.id.barraProgreso);
+
+        barraProgreso.setProgress(50);
+
+        radioGroupEstudios.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                actualizarBarraDeProgreso();
+            }
+        });
+
+        android.widget.CompoundButton.OnCheckedChangeListener vigilanteChecks = new android.widget.CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(android.widget.CompoundButton buttonView, boolean isChecked) {
+                actualizarBarraDeProgreso();
+            }
+        };
 
         //SWITCH POR DEFECTO EN SI
         switchSiNo = findViewById(R.id.switchSiNo);
@@ -61,6 +80,13 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
                 switchSiNo.setText("No");
             }
         });
+
+
+
+        cbDeporte.setOnCheckedChangeListener(vigilanteChecks);
+        cbMusica.setOnCheckedChangeListener(vigilanteChecks);
+        cbArte.setOnCheckedChangeListener(vigilanteChecks);
+        cbTecnologia.setOnCheckedChangeListener(vigilanteChecks);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Formulario de Contacto 2/2");
@@ -134,5 +160,19 @@ public class FormularioMasDatosContacto extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Error al guardar en la base de datos", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void actualizarBarraDeProgreso() {
+        int progresoExtra = 0;
+
+        if (radioGroupEstudios.getCheckedRadioButtonId() != -1) {
+            progresoExtra += 25;
+        }
+
+        if (cbDeporte.isChecked() || cbMusica.isChecked() || cbArte.isChecked() || cbTecnologia.isChecked()) {
+            progresoExtra += 25;
+        }
+
+        barraProgreso.setProgress(50 + progresoExtra);
     }
 }
