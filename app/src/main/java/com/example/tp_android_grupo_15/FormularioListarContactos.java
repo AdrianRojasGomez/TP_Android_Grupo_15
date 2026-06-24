@@ -64,7 +64,7 @@ public class FormularioListarContactos extends AppCompatActivity {
 
                 String detalleCompleto = "Nombre: " + contactoSeleccionado.getNombre() + "\n" +
                         "Apellido: " + contactoSeleccionado.getApellido() + "\n" +
-                        "Telefono" + contactoSeleccionado.getTelefono() + "-" + contactoSeleccionado.getTipoTelefono() + "\n" +
+                        "Telefono: " + contactoSeleccionado.getTelefono() + "-" + contactoSeleccionado.getTipoTelefono() + "\n" +
                         "Email: " + contactoSeleccionado.getEmail() + "-" +contactoSeleccionado.getTipoEmail() + "\n" +
                         "Direccion: "  + contactoSeleccionado.getDireccion() + "\n" +
                         "Fecha de Nacimiento: " + contactoSeleccionado.getFechaNacimiento() + "\n" +
@@ -74,7 +74,7 @@ public class FormularioListarContactos extends AppCompatActivity {
                         "Música: " + (contactoSeleccionado.getInteresMusica() == 1 ? "Sí" : "No") + "\n" +
                         "Arte: " + (contactoSeleccionado.getInteresArte() == 1 ? "Sí" : "No") + "\n" +
                         "Ámbito de la Tecnología: " + (contactoSeleccionado.getInteresTecnologia() == 1 ? "Sí" : "No") + "\n\n" +
-                        "Quiere recibir Infomación: " + (contactoSeleccionado.getRecibirInformacion() == 1 ? "Sí" : "No");
+                        "Quiere recibir Información: " + (contactoSeleccionado.getRecibirInformacion() == 1 ? "Sí" : "No");
 
 
 
